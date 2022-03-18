@@ -10,7 +10,7 @@ public class SqlModule extends ReactContextBaseJavaModule {
   static {
     try {
       // Used to load the 'native-lib' library on application startup.
-      System.loadLibrary("react-native-sql");
+      System.loadLibrary("cpp");
     } catch (Exception ignored) {
     }
   }

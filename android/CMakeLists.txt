@@ -3,7 +3,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 11)
 
 
-set (PACKAGE_NAME "react-native-sql")
+set(PACKAGE_NAME "react-native-sql")
 
 add_library(
         cpp
@@ -14,7 +14,7 @@ add_library(
         cpp-adapter.cpp
         ${INCLUDE_JSI_CPP} # only on older RN versions
 
-        )
+)
 
 # Specifies a path to native header files.
 include_directories(
@@ -26,6 +26,6 @@ include_directories(
 )
 
 target_link_libraries(
-        ${PACKAGE_NAME}
+        cpp
         android
 )
