@@ -18,7 +18,7 @@ void installSequel(jsi::Runtime &jsiRuntime, const char *string) {
 					jsi::detail::throwJSError(runtime, "Non number arguments passed to sequel");
 				}
 
-				double res = 452;
+				double res = arguments[0].asNumber() * arguments[1].asNumber();
 				return jsi::Value(res);
 			}
 	);
