@@ -1,41 +1,51 @@
 package com.reactnativesql;
 
+
 import androidx.annotation.NonNull;
 
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.module.annotations.ReactModule;
 
-@ReactModule(name = SqlModule.NAME)
 public class SqlModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "Sql";
-
-    public SqlModule(ReactApplicationContext reactContext) {
-        super(reactContext);
+  static {
+    try {
+      // Used to load the 'native-lib' library on application startup.
+      System.loadLibrary("react-native-sql");
+    } catch (Exception ignored) {
     }
+  }
 
-    @Override
-    @NonNull
-    public String getName() {
-        return NAME;
-    }
+  private static native void initialize(long jsiPtr, String docDir);
 
-    static {
-        try {
-            // Used to load the 'native-lib' library on application startup.
-            System.loadLibrary("cpp");
-        } catch (Exception ignored) {
-        }
-    }
+  private static native void destruct();
 
-    // Example method
-    // See https://reactnative.dev/docs/native-modules-android
-    @ReactMethod
-    public void multiply(int a, int b, Promise promise) {
-        promise.resolve(nativeMultiply(a, b));
-    }
+  public static final String NAME = "QuickSQLite";
 
-    public static native int nativeMultiply(int a, int b);
+  public SqlModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+  }
+
+  @Override
+  @NonNull
+  public String getName() {
+    return NAME;
+  }
+
+
+  @NonNull
+  @Override
+  public void initialize() {
+    super.initialize();
+
+    SqlModule.initialize(
+      this.getReactApplicationContext().getJavaScriptContextHolder().get(),
+      this.getReactApplicationContext().getFilesDir().getAbsolutePath()
+    );
+  }
+
+  @Override
+  public void onCatalystInstanceDestroy() {
+    SqlModule.destruct();
+  }
+
 }

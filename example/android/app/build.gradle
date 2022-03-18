@@ -75,6 +75,7 @@ import com.android.build.OutputFile
  * ]
  */
 
+
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
     entryFile: "index.tsx",
@@ -175,6 +176,9 @@ android {
             }
 
         }
+    }
+       packagingOptions {
+        pickFirst '**/*.so'
     }
 }
 
